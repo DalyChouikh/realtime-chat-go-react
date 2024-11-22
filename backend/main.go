@@ -7,17 +7,30 @@ import (
 	"github.com/DalyChouikh/realtime-chat-go-react/pkg/websocket"
 )
 
-func serveWS(w http.ResponseWriter, r *http.Request) {
-	ws, err := websocket.Upgrade(w, r)
-	if err != nil {
-		fmt.Fprintf(w, "%+V\n", err)
+func handleWebSockets(pool *websocket.Pool) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		serveWS(pool, w, r)
 	}
-	go websocket.Writer(ws)
-	websocket.Reader(ws)
+}
+
+func serveWS(pool *websocket.Pool, w http.ResponseWriter, r *http.Request) {
+	conn, err := websocket.Upgrade(w, r)
+	if err != nil {
+		fmt.Fprintf(w, "%+v\n", err)
+	}
+	client := &websocket.Client{
+		Conn: conn,
+		Pool: pool,
+	}
+
+	pool.Register <- client
+	client.Read()
 }
 
 func setupRoutes() {
-	http.HandleFunc("/ws", serveWS)
+	pool := websocket.NewPool()
+	go pool.Start()
+	http.HandleFunc("/ws", handleWebSockets(pool))
 }
 
 func main() {
