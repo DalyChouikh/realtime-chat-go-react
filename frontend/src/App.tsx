@@ -10,14 +10,16 @@ function App() {
   const [chatHistory, setChatHistory] = useState<string[]>([]);
   useEffect(() => {
     connect((msg: MessageEvent) => {
-      console.log("New message");
       setChatHistory((chatHistory: string[]) => [...chatHistory, msg.data]);
-      console.log(chatHistory);
     });
   }, []);
   const sendMessageOnKeyPress = (event: React.KeyboardEvent) => {
     if (event.key === "Enter") {
       const input = event.target as HTMLInputElement;
+      if (input.value === "") {
+        alert("Please enter a message");
+        return;
+      }
       sendMsg(input.value);
       input.value = "";
     }
@@ -25,6 +27,10 @@ function App() {
 
   const sendMessageOnButtonClick = () => {
     const input = document.querySelector(".chat-input") as HTMLInputElement;
+    if (input.value === "") {
+      alert("Please enter a message");
+      return;
+    }
     sendMsg(input.value);
     input.value = "";
   };
