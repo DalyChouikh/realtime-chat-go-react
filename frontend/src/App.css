@@ -7,6 +7,12 @@ body {
   margin: 0;
 }
 
+.container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 .header-container {
   background-color: #15223b;
   width: 100%;
@@ -26,9 +32,62 @@ body {
   background-color: #f7f7f7;
   margin: 0;
   padding: 20px;
+  width: 100%;
 }
 
 .chat-history-title {
   margin: 0;
   padding: 0;
+}
+
+.message {
+  display: block;
+  background-color: white;
+  margin: 10px auto;
+  box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.2);
+  padding: 10px 20px;
+  border-radius: 5px;
+  clear: both;
+}
+
+.message.me {
+  color: white;
+  float: right;
+  background-color: #328ec4;
+}
+
+.chat-input-container {
+  width: 95%;
+  display: block;
+  margin: auto;
+}
+
+.chat-input {
+  padding: 10px;
+  margin: 0;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  width: 98%;
+  box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.1);
+}
+
+.send-button-container {
+  width: 95%;
+  display: block;
+  margin: auto;
+}
+
+.send-button {
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #15223b;
+  color: white;
+  width: 98%;
+  cursor: pointer;
+  box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.1);
 }
